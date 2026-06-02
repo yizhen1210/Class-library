@@ -15,8 +15,26 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="魔法書局" />
 
+    <!-- 芫荽體 (Iansui) 網頁字型，由 emfont 提供，依實際用到的字分批載入 -->
+    <link rel="stylesheet" href="https://font.emtech.cc/css/Iansui" />
+
     <!-- Tailwind 透過 CDN 載入，不需要額外的 PostCSS/設定檔 -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      // 讓所有 font-sans 樣式都改用芫荽體
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Iansui', 'ui-sans-serif', 'system-ui', 'sans-serif']
+            }
+          }
+        }
+      };
+    </script>
+    <style>
+      body { font-family: 'Iansui', ui-sans-serif, system-ui, sans-serif; }
+    </style>
     <script type="module" crossorigin src="./assets/index-30oJm0TJ.js"></script>
   </head>
   <body>
