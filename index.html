@@ -2,26 +2,24 @@
 <html lang="zh-Hant">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>魔法書局</title>
 
-    <!-- 加到主畫面用的設定 -->
-    <link rel="manifest" href="./manifest.webmanifest" />
+    <!-- 加到主畫面/捷徑用的圖示與設定（不使用 manifest，讓 Chrome 以一般捷徑方式開啟） -->
     <link rel="icon" type="image/png" href="./icon-192.png" />
     <link rel="apple-touch-icon" href="./icon-180.png" />
     <meta name="theme-color" content="#0f172a" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="魔法書局" />
 
-    <!-- 芫荽體 (Iansui) 網頁字型，由 emfont 提供，依實際用到的字分批載入 -->
+    <!-- 芫荽體 (Iansui) 網頁字型 -->
     <link rel="stylesheet" href="https://font.emtech.cc/css/Iansui" />
 
-    <!-- Tailwind 透過 CDN 載入，不需要額外的 PostCSS/設定檔 -->
+    <!-- Tailwind 透過 CDN 載入 -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-      // 讓所有 font-sans 樣式都改用芫荽體
       tailwind.config = {
         theme: {
           extend: {
@@ -35,7 +33,7 @@
     <style>
       body { font-family: 'Iansui', ui-sans-serif, system-ui, sans-serif; }
     </style>
-    <script type="module" crossorigin src="./assets/index-BZs8dXE_.js"></script>
+    <script type="module" crossorigin src="./assets/index-Bmy4aYvj.js"></script>
   </head>
   <body>
     <div id="root"></div>
