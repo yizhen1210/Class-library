@@ -1035,7 +1035,7 @@
                             <button class="btn small outline danger" data-del-group="${g.id}">刪除組別</button>
                         </div>
                         <div class="chip-list">
-                            ${sortBySeat(st.students.filter(s=>s.groupId===g.id)).map(s => `<span class="chip">${s.seat!=null && s.seat!=='' ? s.seat+'號 ' : ''}${s.name}<button data-del-student="${s.id}">✕</button></span>`).join('') || '<span style="color:var(--muted)">尚無學生</span>'}
+                            ${sortBySeat(st.students.filter(s=>s.groupId===g.id)).map(s => `<span class="chip">${s.seat!=null && s.seat!=='' ? s.seat+'號 ' : ''}${s.name}<button data-move-student="${s.id}" title="搬到其他組別" style="color:var(--accent)">⇄</button><button data-del-student="${s.id}">✕</button></span>`).join('') || '<span style="color:var(--muted)">尚無學生</span>'}
                         </div>
                         <div class="row" style="margin-bottom:0">
                             <input class="txt-input" data-new-seat="${g.id}" placeholder="座號（選填）" style="max-width:110px" inputmode="numeric">
@@ -1056,6 +1056,25 @@
                     resyncFromGlobal();
                     const sid = b.getAttribute('data-del-student');
                     st.students = st.students.filter(s=>s.id!==sid);
+                    saveSettings({ students: st.students });
+                    renderGroups();
+                });
+                $('groupsList').querySelectorAll('[data-move-student]').forEach(b => b.onclick = async () => {
+                    resyncFromGlobal();
+                    const sid = b.getAttribute('data-move-student');
+                    const stu = st.students.find(x=>x.id===sid);
+                    if(!stu) return;
+                    const curGroup = st.groups.find(g=>g.id===stu.groupId);
+                    const otherNames = st.groups.filter(g=>g.id!==stu.groupId).map(g=>g.name).join('、');
+                    const target = await window.askInput(`「${stu.name}」目前在「${curGroup?curGroup.name:'（無組別）'}」，要搬到哪一組？（可選：${otherNames || '尚無其他組別'}）`, '');
+                    if(!target || !target.trim()) return;
+                    const targetGroup = st.groups.find(g => g.name === target.trim());
+                    if(!targetGroup){ window.showAlert('找不到這個組別名稱，請輸入完全一致的組別名稱'); return; }
+                    resyncFromGlobal();
+                    const freshStu = st.students.find(x=>x.id===sid);
+                    if(freshStu) freshStu.groupId = targetGroup.id;
+                    // 只改 students 這個欄位（學生 ID 不變），records/archives 是登記當下就寫死的獨立資料，
+                    // 不會因為這裡改組別而被回頭修改，過去的紀錄與封存完全不受影響。
                     saveSettings({ students: st.students });
                     renderGroups();
                 });
